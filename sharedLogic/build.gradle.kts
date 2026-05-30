@@ -3,6 +3,13 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidMultiplatformLibrary)
+    alias(libs.plugins.apolloGraphQL)
+}
+
+apollo {
+    service("starwars") {
+        packageName.set("com.mdshahsamir.starwars")
+    }
 }
 
 kotlin {
@@ -38,6 +45,8 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
+
+            implementation(libs.apollo.runtime)
         }
 
         androidMain.dependencies {

@@ -4,11 +4,19 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidMultiplatformLibrary)
     alias(libs.plugins.apolloGraphQL)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 apollo {
     service("starwars") {
         packageName.set("com.mdshahsamir.starwars")
+        // Update this path to match your package name
+        schemaFile.set(file("src/commonMain/graphql/com/mdshahsamir/starwars/schema.graphqls"))
+
+        introspection {
+            endpointUrl.set("https://swapi-graphql.netlify.app/.netlify/functions/index/")
+            headers.put("User-Agent", "Apollo")
+        }
     }
 }
 

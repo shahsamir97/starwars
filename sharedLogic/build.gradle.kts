@@ -14,7 +14,7 @@ apollo {
         schemaFile.set(file("src/commonMain/graphql/com/mdshahsamir/starwars/schema.graphqls"))
 
         introspection {
-            endpointUrl.set("https://swapi-graphql.netlify.app/.netlify/functions/index/")
+            endpointUrl.set("https://swapi-graphql.netlify.app/graphql")
             headers.put("User-Agent", "Apollo")
         }
     }
@@ -54,6 +54,7 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
 
+            //apollo
             implementation(libs.apollo.runtime)
         }
 

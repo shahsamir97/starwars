@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.androidMultiplatformLibrary)
     alias(libs.plugins.apolloGraphQL)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.koin.compiler)
 }
 
 apollo {
@@ -56,10 +57,15 @@ kotlin {
 
             //apollo
             implementation(libs.apollo.runtime)
+
+            // Koin
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
         }
 
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.koin.android)
         }
 
         iosMain.dependencies {

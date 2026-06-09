@@ -1,6 +1,6 @@
 package com.mdshahsamir.starwars.data.remote
 
-import com.mdshahsamir.starwars.Film
+import com.mdshahsamir.starwars.domain.model.Film
 import kotlinx.serialization.Serializable
 
 @Serializable

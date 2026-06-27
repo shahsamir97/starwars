@@ -50,6 +50,9 @@ kotlin {
     
     sourceSets {
         commonMain.dependencies {
+            //viewmodel
+            implementation(libs.androidx.lifecycle.viewmodel)
+
             // Ktor
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
@@ -61,6 +64,8 @@ kotlin {
             // Koin
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
+
+            implementation(libs.kermit)
         }
 
         androidMain.dependencies {

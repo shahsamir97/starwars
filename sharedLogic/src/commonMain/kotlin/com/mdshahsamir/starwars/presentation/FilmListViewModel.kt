@@ -31,6 +31,8 @@ class FilmListViewModel(
                 _uiState.value = FilmListUiState.Success(films)
             } catch (e: Exception) {
                 Logger.d("FilmListViewModel") { "Failed to fetch films" }
+                Logger.e("FilmListViewModel") { "Error: ${e.message}" }
+                e.printStackTrace()
 
                 _uiState.value = FilmListUiState.Error(e.message ?: "Unknown error")
             }

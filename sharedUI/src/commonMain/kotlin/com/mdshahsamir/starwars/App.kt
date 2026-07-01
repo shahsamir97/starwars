@@ -1,7 +1,5 @@
 package com.mdshahsamir.starwars
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,11 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mdshahsamir.starwars.presentation.FilmListUiState
 import com.mdshahsamir.starwars.presentation.FilmListViewModel
-import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
-
-import starwars.sharedui.generated.resources.Res
-import starwars.sharedui.generated.resources.compose_multiplatform
 
 @Composable
 @Preview
@@ -56,8 +50,7 @@ fun App(
                                       .fillMaxWidth()
                                       .background(MaterialTheme.colorScheme.surface)
                             ) {
-                                 Text(film.title, style = MaterialTheme.typography.titleLarge)
-                                 Text("Director: ${film.director}", style = MaterialTheme.typography.bodyMedium)
+                                 film.title?.let { Text(it, style = MaterialTheme.typography.titleLarge) }
                             }
                           }
                    }

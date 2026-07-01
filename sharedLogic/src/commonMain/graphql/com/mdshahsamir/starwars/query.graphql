@@ -1,0 +1,8 @@
+query GetAllFilms {
+    allFilms {
+        films {
+            title
+            releaseDate
+        }
+    }
+}

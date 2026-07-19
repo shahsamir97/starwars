@@ -11,7 +11,11 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,7 +26,7 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 @Preview
-fun App(
+fun HomePage(
     viewModel: FilmListViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -43,22 +47,22 @@ fun App(
             when (val state = uiState) {
                 is FilmListUiState.Loading -> CircularProgressIndicator()// Show loader
                 is FilmListUiState.Success -> {
-                   LazyColumn {
-                          items(state.films) { film ->
+                    LazyColumn {
+                        items(state.films) { film ->
                             Column(
-                                 modifier = Modifier
-                                      .fillMaxWidth()
-                                      .background(MaterialTheme.colorScheme.surface)
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(MaterialTheme.colorScheme.surface)
                             ) {
-                                 film.title?.let { Text(it, style = MaterialTheme.typography.titleLarge) }
+                                film.title?.let { Text(it, style = MaterialTheme.typography.titleLarge) }
                             }
-                          }
-                   }
+                        }
+                    }
                 }
                 is FilmListUiState.Error -> {
                     Text("Error: ${state.message}")
+                }
             }
-        }
         }
     }
 }

@@ -3,12 +3,15 @@ package com.mdshahsamir.starwars.di
 import com.apollographql.apollo.ApolloClient
 import com.mdshahsamir.starwars.data.remote.StarWarApiImpl
 import com.mdshahsamir.starwars.data.remote.StarWarsApi
-import com.mdshahsamir.starwars.data.repository.FilmRepository
+import com.mdshahsamir.starwars.domain.repository.FilmRepository
 import com.mdshahsamir.starwars.data.repository.FilmRepositoryImpl
 import com.mdshahsamir.starwars.domain.usecases.GetFilmsUseCase
 import com.mdshahsamir.starwars.presentation.FilmListViewModel
+import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.KoinAppDeclaration
+import org.koin.dsl.includes
 import org.koin.dsl.module
 
 
@@ -26,10 +29,16 @@ val domainModule = module {
 }
 
 val presentationModule = module {
-    factory { FilmListViewModel(get()) }
+    viewModel { params ->
+        FilmListViewModel(
+            getFilmsUseCase = get()
+        )
+    }
 }
 
-fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
-    appDeclaration()
-    modules(networkModule, repositoryModule, domainModule, presentationModule)
+fun initKoin(config: KoinAppDeclaration? = null) : KoinApplication {
+    return startKoin {
+        includes(config)
+        modules(networkModule, repositoryModule, domainModule, presentationModule)
+    }
 }

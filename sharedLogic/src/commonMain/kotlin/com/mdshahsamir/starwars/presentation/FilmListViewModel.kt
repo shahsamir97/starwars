@@ -1,18 +1,19 @@
 package com.mdshahsamir.starwars.presentation
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.mdshahsamir.starwars.domain.usecases.GetFilmsUseCase
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.rickclephas.kmp.observableviewmodel.MutableStateFlow
+import com.rickclephas.kmp.observableviewmodel.ViewModel
+import com.rickclephas.kmp.observableviewmodel.launch
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.asStateFlow
 
-class FilmListViewModel(
-    private val getFilmsUseCase: GetFilmsUseCase
+
+open class FilmListViewModel(
+     private val getFilmsUseCase: GetFilmsUseCase
 ): ViewModel() {
 
-    private val _uiState = MutableStateFlow<FilmListUiState>(FilmListUiState.Loading)
-    val uiState: StateFlow<FilmListUiState> = _uiState
+    private val _uiState = MutableStateFlow<FilmListUiState>(viewModelScope,FilmListUiState.Loading)
+    val uiState: StateFlow<FilmListUiState> = _uiState.asStateFlow()
 
     init {
         loadFilms()
@@ -21,6 +22,7 @@ class FilmListViewModel(
     fun loadFilms() {
         viewModelScope.launch {
             _uiState.value = FilmListUiState.Loading
+
             try {
                 val films = getFilmsUseCase()
                 _uiState.value = FilmListUiState.Success(films)

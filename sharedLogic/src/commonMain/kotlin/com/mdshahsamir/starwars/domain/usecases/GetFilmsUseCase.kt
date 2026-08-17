@@ -1,6 +1,6 @@
 package com.mdshahsamir.starwars.domain.usecases
 
-import com.mdshahsamir.starwars.data.repository.FilmRepository
+import com.mdshahsamir.starwars.domain.repository.FilmRepository
 
 class GetFilmsUseCase(
     private val filmRepository: FilmRepository

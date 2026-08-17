@@ -1,7 +1,7 @@
 package com.mdshahsamir.starwars.data
 
 import com.mdshahsamir.starwars.GetAllFilmsQuery
-import com.mdshahsamir.starwars.data.repository.FilmRepository
+import com.mdshahsamir.starwars.domain.repository.FilmRepository
 
 val fakeListOfFilms = listOf(
     GetAllFilmsQuery.Film(

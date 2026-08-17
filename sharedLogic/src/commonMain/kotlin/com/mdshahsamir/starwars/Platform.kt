@@ -1,6 +1,6 @@
 package com.mdshahsamir.starwars
 
-import io.ktor.client.engine.HttpClientEngine
+import org.koin.core.module.Module
 
 interface Platform {
     val name: String

@@ -27,6 +27,8 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
+            export(libs.androidx.lifecycle.viewmodel)
+            export("com.rickclephas.kmp:kmp-observableviewmodel-core:1.0.6")
             baseName = "SharedLogic"
             isStatic = true
         }
@@ -49,9 +51,13 @@ kotlin {
     }
     
     sourceSets {
+        all {
+            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
+        }
+
         commonMain.dependencies {
             //viewmodel
-            implementation(libs.androidx.lifecycle.viewmodel)
+            api(libs.androidx.lifecycle.viewmodel)
 
             // Ktor
             implementation(libs.ktor.client.core)
@@ -65,13 +71,14 @@ kotlin {
             // Koin
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
+            implementation(libs.koin.core.viewmodel)
 
             implementation(libs.kermit)
+            api("com.rickclephas.kmp:kmp-observableviewmodel-core:1.0.6")
         }
 
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)
-            implementation(libs.koin.android)
         }
 
         iosMain.dependencies {
@@ -81,7 +88,6 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
             implementation(libs.kotlin.coroutines.test)
-            implementation(libs.kotlin.testJunit)
         }
     }
 }

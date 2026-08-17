@@ -1,28 +1,45 @@
 import SwiftUI
 import SharedLogic
+import KMPObservableViewModelSwiftUI
 
 struct ContentView: View {
-    @State private var showContent = false
+    
+    @StateViewModel
+    private var viewmodel: FilmListViewModel
+    
+    init() {
+        _viewmodel = StateViewModel(
+            wrappedValue: IosKoin.shared.getFilmListViewModel()
+        )
+    }
+        
     var body: some View {
-        VStack {
-            Button("Click me iOS!") {
-                withAnimation {
-                    showContent = !showContent
+        homePageContent
+    }
+
+    @ViewBuilder
+    private var homePageContent: some View {
+        switch viewmodel.uiState {
+        case is FilmListUiStateLoading:
+            ProgressView()
+
+        case let success as FilmListUiStateSuccess:
+            List(success.films, id: \.self) { film in
+                VStack(alignment: .leading) {
+                    if let title = film.title {
+                        Text(title)
+                            .font(.title2)
+                            .padding()
+                    }
                 }
             }
 
-            if showContent {
-                VStack(spacing: 16) {
-                    Image(systemName: "swift")
-                        .font(.system(size: 200))
-                        .foregroundColor(.accentColor)
-                    Text("SwiftUI: \(Greeting().greet())")
-                }
-                .transition(.move(edge: .top).combined(with: .opacity))
-            }
+        case let error as FilmListUiStateError:
+            Text("Error: \(error.message)")
+
+        default:
+            EmptyView()
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .padding()
     }
 }
 

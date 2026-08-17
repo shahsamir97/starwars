@@ -1,6 +1,7 @@
 package com.mdshahsamir.starwars.presentation
 
 import com.mdshahsamir.starwars.domain.usecases.GetFilmsUseCase
+import com.rickclephas.kmp.nativecoroutines.NativeCoroutinesState
 import com.rickclephas.kmp.observableviewmodel.MutableStateFlow
 import com.rickclephas.kmp.observableviewmodel.ViewModel
 import com.rickclephas.kmp.observableviewmodel.launch
@@ -13,6 +14,7 @@ open class FilmListViewModel(
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow<FilmListUiState>(viewModelScope,FilmListUiState.Loading)
+    @NativeCoroutinesState
     val uiState: StateFlow<FilmListUiState> = _uiState.asStateFlow()
 
     init {

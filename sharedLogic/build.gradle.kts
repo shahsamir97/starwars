@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.apolloGraphQL)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.koin.compiler)
+    id("com.rickclephas.kmp.nativecoroutines") version "1.0.3"
 }
 
 apollo {
@@ -27,8 +28,6 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            export(libs.androidx.lifecycle.viewmodel)
-            export("com.rickclephas.kmp:kmp-observableviewmodel-core:1.0.6")
             baseName = "SharedLogic"
             isStatic = true
         }
@@ -53,6 +52,7 @@ kotlin {
     sourceSets {
         all {
             languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
+            languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
         }
 
         commonMain.dependencies {
@@ -74,7 +74,7 @@ kotlin {
             implementation(libs.koin.core.viewmodel)
 
             implementation(libs.kermit)
-            api("com.rickclephas.kmp:kmp-observableviewmodel-core:1.0.6")
+            api(libs.kmp.observableviewmodel.core)
         }
 
         androidMain.dependencies {
@@ -83,6 +83,7 @@ kotlin {
 
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
+            api(libs.kmp.observableviewmodel.core)
         }
 
         commonTest.dependencies {

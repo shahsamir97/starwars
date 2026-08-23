@@ -14,11 +14,6 @@ apollo {
         packageName.set("com.mdshahsamir.starwars")
         // Update this path to match your package name
         schemaFile.set(file("src/commonMain/graphql/com/mdshahsamir/starwars/schema.graphqls"))
-
-        introspection {
-            endpointUrl.set("https://swapi-graphql.netlify.app/graphql")
-            headers.put("User-Agent", "Apollo")
-        }
     }
 }
 
@@ -33,7 +28,7 @@ kotlin {
         }
     }
     
-    androidLibrary {
+    android {
        namespace = "com.mdshahsamir.starwars.sharedLogic"
        compileSdk = libs.versions.android.compileSdk.get().toInt()
        minSdk = libs.versions.android.minSdk.get().toInt()

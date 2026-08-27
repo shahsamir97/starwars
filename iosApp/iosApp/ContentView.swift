@@ -24,6 +24,8 @@ struct ContentView: View {
             ProgressView()
 
         case let success as FilmListUiStateSuccess:
+            Text("Films")
+                .font(.headline)
             List(success.films, id: \.self) { film in
                 VStack(alignment: .leading) {
                     if let title = film.title {
